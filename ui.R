@@ -1,20 +1,26 @@
-fluidPage(
-    titlePanel("NYC Tickets"),
-    
-    # Create a new Row in the UI for selectInputs
-    fluidRow(
-        column(4,
-               selectInput("time",
-                           "Time Range:",
-                           time_ranges)
-        ),
-        
+dashboardPage(
+    dashboardHeader(title = 'NYC Tickets'),
+    dashboardSidebar(
+        sidebarUserPanel(tags$p(style="color:navy")), 
+        sidebarMenu(menuItem("Ticket Time",tabName = "Time"), 
+                    menuItem("Ticket Time Plot",tabName = "Plot")),
+        selectInput("time",
+                    "Time Range:",
+                    time_ranges)
     ),
-    # Create a new row for the table.
-    DT::dataTableOutput("table"),
-    plotOutput("violationCount")
-
     
+    dashboardBody(
+        tabItems(
+            tabItem(tabName = "Time", 
+                    tags$h3("Ticket Time"),
+                    tags$p("Tickets"),
+                    DT::dataTableOutput("table"),
+                    
+                    br()),
+            tabItem(tabName = "Plot", 
+                    tags$h3("Ticket Time"),
+                    tags$p("Tickets"),
+                    plotOutput("violationCount"),
+                    br())
 )
-
-    
+    ))
